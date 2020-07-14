@@ -11,11 +11,13 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { TodoComponent } from './todo/todo.component';
+import { SignalRService } from './charts/signalrservice.component';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -24,18 +26,21 @@ import { ModalModule } from 'ngx-bootstrap/modal';
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    TodoComponent
+    TodoComponent,
+    SignalRService
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     FontAwesomeModule,
     HttpClientModule,
     FormsModule,
+    ChartsModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'app-chart-data', component: SignalRService },
       { path: 'todo', component: TodoComponent, canActivate: [AuthorizeGuard] },
     ]),
     BrowserAnimationsModule,

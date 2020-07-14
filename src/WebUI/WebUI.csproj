@@ -40,8 +40,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\charts\model\chartmodel.ts" />
+    <None Remove="ClientApp\src\app\charts\signalrservice.component.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\charts\model\chartmodel.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\charts\signalrservice.component.ts" />
   </ItemGroup>
 
   <Target Name="NSwag" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug'">

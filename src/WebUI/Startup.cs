@@ -3,10 +3,12 @@ using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Infrastructure;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.WebUI.Filters;
+using CleanArchitecture.WebUI.Hubs;
 using CleanArchitecture.WebUI.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -38,12 +40,20 @@ namespace CleanArchitecture.WebUI
 
             services.AddHealthChecks()
                 .AddDbContextCheck<ApplicationDbContext>();
-
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder
+                .WithOrigins("http://localhost:4200")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials());
+            });
             services.AddControllersWithViews(options => 
                 options.Filters.Add(new ApiExceptionFilter()));
 
             services.AddRazorPages();
 
+            services.AddSignalR();
             // Customise default API behaviour
             services.Configure<ApiBehaviorOptions>(options =>
             {
@@ -99,7 +109,7 @@ namespace CleanArchitecture.WebUI
                 settings.Path = "/api";
                 settings.DocumentPath = "/api/specification.json";
             });
-
+            app.UseCors("CorsPolicy");
             app.UseRouting();
 
             app.UseAuthentication();
@@ -111,6 +121,7 @@ namespace CleanArchitecture.WebUI
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChartHub>("/chart");
             });
 
             app.UseSpa(spa =>

@@ -6,6 +6,27 @@
     "version": "1.0.0"
   },
   "paths": {
+    "/api/Chart": {
+      "get": {
+        "tags": [
+          "Chart"
+        ],
+        "operationId": "Chart_Get",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/TodoItems": {
       "post": {
         "tags": [
