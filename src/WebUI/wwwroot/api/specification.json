@@ -1,5 +1,5 @@
-﻿{
-  "x-generator": "NSwag v13.3.0.0 (NJsonSchema v10.1.11.0 (Newtonsoft.Json v12.0.0.0))",
+{
+  "x-generator": "NSwag v13.14.4.0 (NJsonSchema v10.5.2.0 (Newtonsoft.Json v13.0.0.0))",
   "openapi": "3.0.0",
   "info": {
     "title": "CleanArchitecture API",
@@ -418,8 +418,7 @@
             "format": "int32"
           },
           "title": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         }
       },
@@ -432,8 +431,7 @@
             "format": "int32"
           },
           "title": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "done": {
             "type": "boolean"
@@ -456,8 +454,7 @@
             "$ref": "#/components/schemas/PriorityLevel"
           },
           "note": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         }
       },
@@ -483,14 +480,12 @@
         "properties": {
           "priorityLevels": {
             "type": "array",
-            "nullable": true,
             "items": {
               "$ref": "#/components/schemas/PriorityLevelDto"
             }
           },
           "lists": {
             "type": "array",
-            "nullable": true,
             "items": {
               "$ref": "#/components/schemas/TodoListDto"
             }
@@ -506,8 +501,7 @@
             "format": "int32"
           },
           "name": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         }
       },
@@ -520,12 +514,10 @@
             "format": "int32"
           },
           "title": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "items": {
             "type": "array",
-            "nullable": true,
             "items": {
               "$ref": "#/components/schemas/TodoItemDto"
             }
@@ -545,8 +537,7 @@
             "format": "int32"
           },
           "title": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           },
           "done": {
             "type": "boolean"
@@ -556,8 +547,7 @@
             "format": "int32"
           },
           "note": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         }
       },
@@ -566,8 +556,7 @@
         "additionalProperties": false,
         "properties": {
           "title": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         }
       },
@@ -580,8 +569,7 @@
             "format": "int32"
           },
           "title": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         }
       },
@@ -602,8 +590,7 @@
             "format": "int32"
           },
           "summary": {
-            "type": "string",
-            "nullable": true
+            "type": "string"
           }
         }
       }

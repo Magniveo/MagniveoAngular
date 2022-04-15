@@ -1,32 +1,40 @@
 ﻿using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Domain.ValueObjects;
 using CleanArchitecture.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace CleanArchitecture.Infrastructure.Persistence
+namespace CleanArchitecture.Infrastructure.Persistence;
+
+public static class ApplicationDbContextSeed
 {
-    public static class ApplicationDbContextSeed
+    public static async Task SeedDefaultUserAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
     {
-        public static async Task SeedDefaultUserAsync(UserManager<ApplicationUser> userManager)
-        {
-            var defaultUser = new ApplicationUser { UserName = "administrator@localhost", Email = "administrator@localhost" };
+        var administratorRole = new IdentityRole("Administrator");
 
-            if (userManager.Users.All(u => u.UserName != defaultUser.UserName))
-            {
-                await userManager.CreateAsync(defaultUser, "Administrator1!");
-            }
+        if (roleManager.Roles.All(r => r.Name != administratorRole.Name))
+        {
+            await roleManager.CreateAsync(administratorRole);
         }
 
-        public static async Task SeedSampleDataAsync(ApplicationDbContext context)
+        var administrator = new ApplicationUser { UserName = "administrator@localhost", Email = "administrator@localhost" };
+
+        if (userManager.Users.All(u => u.UserName != administrator.UserName))
         {
-            // Seed, if necessary
-            if (!context.TodoLists.Any())
+            await userManager.CreateAsync(administrator, "Administrator1!");
+            await userManager.AddToRolesAsync(administrator, new[] { administratorRole.Name });
+        }
+    }
+
+    public static async Task SeedSampleDataAsync(ApplicationDbContext context)
+    {
+        // Seed, if necessary
+        if (!context.TodoLists.Any())
+        {
+            context.TodoLists.Add(new TodoList
             {
-                context.TodoLists.Add(new TodoList
-                {
-                    Title = "Shopping",
-                    Items =
+                Title = "Shopping",
+                Colour = Colour.Blue,
+                Items =
                     {
                         new TodoItem { Title = "Apples", Done = true },
                         new TodoItem { Title = "Milk", Done = true },
@@ -37,10 +45,9 @@ namespace CleanArchitecture.Infrastructure.Persistence
                         new TodoItem { Title = "Tuna" },
                         new TodoItem { Title = "Water" }
                     }
-                });
+            });
 
-                await context.SaveChangesAsync();
-            }
+            await context.SaveChangesAsync();
         }
     }
 }

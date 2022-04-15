@@ -1,5 +1,5 @@
 ﻿{
-  "runtime": "NetCore31",
+  "runtime": "Net60",
   "defaultVariables": null,
   "documentGenerator": {
     "aspNetCoreToOpenApi": {
@@ -110,7 +110,7 @@
       "enumNameGeneratorType": null,
       "serviceHost": null,
       "serviceSchemes": null,
-      "output": "ClientApp/src/app/CleanArchitecture-api.ts"
+      "output": "ClientApp/src/app/web-api-client.ts"
     }
   }
 }

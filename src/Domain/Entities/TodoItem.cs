@@ -1,26 +1,35 @@
-﻿using CleanArchitecture.Domain.Common;
-using CleanArchitecture.Domain.Enums;
-using System;
+﻿namespace CleanArchitecture.Domain.Entities;
 
-namespace CleanArchitecture.Domain.Entities
+public class TodoItem : AuditableEntity, IHasDomainEvent
 {
-    public class TodoItem : AuditableEntity
+    public int Id { get; set; }
+
+    public int ListId { get; set; }
+
+    public string? Title { get; set; }
+
+    public string? Note { get; set; }
+
+    public PriorityLevel Priority { get; set; }
+
+    public DateTime? Reminder { get; set; }
+
+    private bool _done;
+    public bool Done
     {
-        public int Id { get; set; }
+        get => _done;
+        set
+        {
+            if (value == true && _done == false)
+            {
+                DomainEvents.Add(new TodoItemCompletedEvent(this));
+            }
 
-        public int ListId { get; set; }
-
-        public string Title { get; set; }
-
-        public string Note { get; set; }
-
-        public bool Done { get; set; }
-
-        public DateTime? Reminder { get; set; }
-
-        public PriorityLevel Priority { get; set; }
-
-
-        public TodoList List { get; set; }
+            _done = value;
+        }
     }
+
+    public TodoList List { get; set; } = null!;
+
+    public List<DomainEvent> DomainEvents { get; set; } = new List<DomainEvent>();
 }
