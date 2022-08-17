@@ -1,40 +1,38 @@
 ﻿using CleanArchitecture.Application.Common.Exceptions;
 using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Domain.Entities;
+using CleanArchitecture.Domain.Events;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace CleanArchitecture.Application.TodoItems.Commands.DeleteTodoItem
+namespace CleanArchitecture.Application.TodoItems.Commands.DeleteTodoItem;
+
+public record DeleteTodoItemCommand(int Id) : IRequest;
+
+public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemCommand>
 {
-    public class DeleteTodoItemCommand : IRequest
+    private readonly IApplicationDbContext _context;
+
+    public DeleteTodoItemCommandHandler(IApplicationDbContext context)
     {
-        public int Id { get; set; }
+        _context = context;
     }
 
-    public class DeleteTodoItemCommandHandler : IRequestHandler<DeleteTodoItemCommand>
+    public async Task<Unit> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
     {
-        private readonly IApplicationDbContext _context;
+        var entity = await _context.TodoItems
+            .FindAsync(new object[] { request.Id }, cancellationToken);
 
-        public DeleteTodoItemCommandHandler(IApplicationDbContext context)
+        if (entity == null)
         {
-            _context = context;
+            throw new NotFoundException(nameof(TodoItem), request.Id);
         }
 
-        public async Task<Unit> Handle(DeleteTodoItemCommand request, CancellationToken cancellationToken)
-        {
-            var entity = await _context.TodoItems.FindAsync(request.Id);
+        _context.TodoItems.Remove(entity);
 
-            if (entity == null)
-            {
-                throw new NotFoundException(nameof(TodoItem), request.Id);
-            }
+        entity.AddDomainEvent(new TodoItemDeletedEvent(entity));
 
-            _context.TodoItems.Remove(entity);
+        await _context.SaveChangesAsync(cancellationToken);
 
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return Unit.Value;
-        }
+        return Unit.Value;
     }
 }

@@ -27,6 +27,9 @@ Obj/
 # Visual Studio 2015 cache/options directory
 .vs/
 
+# Jetbrains Rider cache/options directory
+.idea/
+
 # MSTest test Results
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
@@ -229,4 +232,7 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
-/src/WebUI/appsettings.json
+/NDependOut
+/CleanArchitecture.ndproj
+/.mfractor
+src/WebUI/ClientApp/package-lock.json
