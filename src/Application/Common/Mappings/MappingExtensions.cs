@@ -1,7 +1,4 @@
-﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using CleanArchitecture.Application.Common.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using CleanArchitecture.Application.Common.Models;
 
 namespace CleanArchitecture.Application.Common.Mappings;
 

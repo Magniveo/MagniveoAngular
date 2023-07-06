@@ -25,7 +25,7 @@ public class ApplicationDbContextInitialiser
     {
         try
         {
-            if (_context.Database.IsNpgsql())
+            if (_context.Database.IsSqlServer())
             {
                 await _context.Database.MigrateAsync();
             }
@@ -41,7 +41,7 @@ public class ApplicationDbContextInitialiser
     {
         try
         {
-            //await TrySeedAsync();
+            await TrySeedAsync();
         }
         catch (Exception ex)
         {
@@ -66,7 +66,10 @@ public class ApplicationDbContextInitialiser
         if (_userManager.Users.All(u => u.UserName != administrator.UserName))
         {
             await _userManager.CreateAsync(administrator, "Administrator1!");
-            await _userManager.AddToRolesAsync(administrator, new[] { administratorRole.Name });
+            if (!string.IsNullOrWhiteSpace(administratorRole.Name))
+            {
+                await _userManager.AddToRolesAsync(administrator, new [] { administratorRole.Name });
+            }
         }
 
         // Default data

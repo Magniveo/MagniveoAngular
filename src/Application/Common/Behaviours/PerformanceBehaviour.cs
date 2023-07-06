@@ -1,6 +1,5 @@
 ﻿using System.Diagnostics;
 using CleanArchitecture.Application.Common.Interfaces;
-using MediatR;
 using Microsoft.Extensions.Logging;
 
 namespace CleanArchitecture.Application.Common.Behaviours;
@@ -9,22 +8,22 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
 {
     private readonly Stopwatch _timer;
     private readonly ILogger<TRequest> _logger;
-    private readonly ICurrentUserService _currentUserService;
+    private readonly IUser _user;
     private readonly IIdentityService _identityService;
 
     public PerformanceBehaviour(
         ILogger<TRequest> logger,
-        ICurrentUserService currentUserService,
+        IUser user,
         IIdentityService identityService)
     {
         _timer = new Stopwatch();
 
         _logger = logger;
-        _currentUserService = currentUserService;
+        _user = user;
         _identityService = identityService;
     }
 
-    public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
         _timer.Start();
 
@@ -37,7 +36,7 @@ public class PerformanceBehaviour<TRequest, TResponse> : IPipelineBehavior<TRequ
         if (elapsedMilliseconds > 500)
         {
             var requestName = typeof(TRequest).Name;
-            var userId = _currentUserService.UserId ?? string.Empty;
+            var userId = _user.Id ?? string.Empty;
             var userName = string.Empty;
 
             if (!string.IsNullOrEmpty(userId))

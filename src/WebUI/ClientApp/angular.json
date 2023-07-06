@@ -1,17 +1,11 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "cli": {
-    "analytics": false
-  },
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "CleanArchitecture.WebUI": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        },
         "@schematics/angular:application": {
           "strict": true
         }
@@ -29,6 +23,9 @@
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
+            "allowedCommonJsDependencies": [
+              "oidc-client"
+            ],
             "assets": [
               "src/assets"
             ],
@@ -134,5 +131,8 @@
       }
     }
   },
-  "defaultProject": "CleanArchitecture.WebUI"
+  "defaultProject": "CleanArchitecture.WebUI",
+  "cli": {
+    "analytics": false
+  }
 }

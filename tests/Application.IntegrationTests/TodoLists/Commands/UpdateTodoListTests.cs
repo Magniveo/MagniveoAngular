@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Common.Exceptions;
+﻿using Ardalis.GuardClauses;
+using CleanArchitecture.Application.Common.Exceptions;
 using CleanArchitecture.Application.TodoLists.Commands.CreateTodoList;
 using CleanArchitecture.Application.TodoLists.Commands.UpdateTodoList;
 using CleanArchitecture.Domain.Entities;
@@ -40,7 +41,7 @@ public class UpdateTodoListTests : BaseTestFixture
         (await FluentActions.Invoking(() =>
             SendAsync(command))
                 .Should().ThrowAsync<ValidationException>().Where(ex => ex.Errors.ContainsKey("Title")))
-                .And.Errors["Title"].Should().Contain("The specified title already exists.");
+                .And.Errors["Title"].Should().Contain("'Title' must be unique.");
     }
 
     [Test]

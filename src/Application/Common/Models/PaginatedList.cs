@@ -1,15 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-
-namespace CleanArchitecture.Application.Common.Models;
+﻿namespace CleanArchitecture.Application.Common.Models;
 
 public class PaginatedList<T>
 {
-    public List<T> Items { get; }
+    public IReadOnlyCollection<T> Items { get; }
     public int PageNumber { get; }
     public int TotalPages { get; }
     public int TotalCount { get; }
 
-    public PaginatedList(List<T> items, int count, int pageNumber, int pageSize)
+    public PaginatedList(IReadOnlyCollection<T> items, int count, int pageNumber, int pageSize)
     {
         PageNumber = pageNumber;
         TotalPages = (int)Math.Ceiling(count / (double)pageSize);

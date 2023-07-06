@@ -1,54 +1,61 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <RootNamespace>CleanArchitecture.WebUI</RootNamespace>
-        <AssemblyName>CleanArchitecture.WebUI</AssemblyName>
+        <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <IsPackable>true</IsPackable>
+        <!--#if (!UseApiOnly)-->
         <SpaRoot>ClientApp\</SpaRoot>
         <SpaProxyServerUrl>https://localhost:44447</SpaProxyServerUrl>
         <SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
+        <!--#endif-->
         <ImplicitUsings>enable</ImplicitUsings>
-        <UserSecretsId>efad71c6-743c-4b87-9de8-f26d77146f6d</UserSecretsId>
+        <IncludeOpenAPIAnalyzers>true</IncludeOpenAPIAnalyzers>
+		<RootNamespace>CleanArchitecture.WebUI</RootNamespace>
+		<AssemblyName>CleanArchitecture.WebUI</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.4" />
-        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.5" />
-        <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.5" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <ProjectReference Include="..\Application\Application.csproj" />
+        <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="CleanArchitecture.Application.IntegrationTests" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.0-preview.5.23302.2" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.0-preview.5.23302.2" />
+        <!--#if (!UseApiOnly)-->
+        <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.0-preview.5.23302.2" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0-preview.5.23302.2" />
+        <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="8.0.0-preview.5.23302.2">
+            <!-- The SPA Proxy is only used at development time -->
+            <Publish>false</Publish>
         </PackageReference>
-        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="6.0.5" />
-        <PackageReference Include="NSwag.AspNetCore" Version="13.16.0" />
-        <PackageReference Include="NSwag.MSBuild" Version="13.16.0">
+        <!--#endif-->
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.0-preview.5.23280.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.0-preview.5.23280.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.0-preview.5.23280.1" />
+        <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks.EntityFrameworkCore" Version="8.0.0-preview.5.23302.2" />
+        <PackageReference Include="NSwag.AspNetCore" Version="13.19.0" />
+        <PackageReference Include="NSwag.MSBuild" Version="13.19.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+        <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
+        <PackageReference Include="ZymLabs.NSwag.FluentValidation.AspNetCore" Version="0.6.2" />
     </ItemGroup>
 
+    <!--#if (!UseApiOnly)-->
     <ItemGroup>
         <!-- Don't publish the SPA source files, but do show them in the project files list -->
         <Content Remove="$(SpaRoot)**" />
         <None Remove="$(SpaRoot)**" />
         <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
     </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Application\Application.csproj" />
-      <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
-    </ItemGroup>
-
-    <PropertyGroup>
-        <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-    </PropertyGroup>
-
-    <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' ">
-        <Exec WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net60) run nswag.json /variables:Configuration=$(Configuration)" />
-    </Target>
-
+    
     <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
         <!-- Ensure Node.js is installed -->
         <Exec Command="node --version" ContinueOnError="true">
@@ -58,15 +65,34 @@
         <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
         <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
     </Target>
+    <!--#endif-->
+    
+    <!-- Auto-generated Open API specification and Angular TypeScript clients -->
+    <PropertyGroup>
+        <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+    </PropertyGroup>
 
+    <Target Name="NSwag" AfterTargets="PostBuildEvent" Condition=" '$(Configuration)' == 'Debug' And '$(SkipNSwag)' != 'True' ">
+        <Exec ConsoleToMSBuild="true" ContinueOnError="true" WorkingDirectory="$(ProjectDir)" EnvironmentVariables="ASPNETCORE_ENVIRONMENT=Development" Command="$(NSwagExe_Net70) run config.nswag /variables:Configuration=$(Configuration)">
+            <Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+            <Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+        </Exec>
+
+        <Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="low" />
+        <Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'" />
+    </Target>
+
+    <!--#if (!UseApiOnly)-->
     <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
         <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
         <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
-        <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" />
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --configuration production" Condition="'$(UseAngular)' != 'True'" />
+        <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build" Condition="'$(UseReact)' != 'True'" />
 
         <!-- Include the newly-built files in the publish output -->
         <ItemGroup>
-            <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+            <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" Condition="'$(UseAngular)' != 'True'" />
+            <DistFiles Include="$(SpaRoot)build\**" Condition="'$(UseReact)' != 'True'" />
             <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
                 <RelativePath>wwwroot\%(RecursiveDir)%(FileName)%(Extension)</RelativePath>
                 <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
@@ -74,7 +100,5 @@
             </ResolvedFileToPublish>
         </ItemGroup>
     </Target>
-
-    <ProjectExtensions><VisualStudio><UserProperties /></VisualStudio></ProjectExtensions>
-
+    <!--#endif-->   
 </Project>

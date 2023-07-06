@@ -3,15 +3,15 @@
   <metadata>
 
     <id>Clean.Architecture.Solution.Template</id>
-    <version>6.1.0</version>
+    <version>8.0.0-preview.5.5</version>
     <title>Clean Architecture Solution Template</title>
     <authors>JasonTaylorDev</authors>
-    <description>Clean Architecture Solution Template for and .NET 6.</description>
+    <description>Clean Architecture Solution Template for .NET 8.</description>
     <summary>
-      This is a solution template for creating a Single Page App (SPA) with ASP.NET Core 6 and Angular 13 following the principles of Clean Architecture.
+      A Clean Architecture Solution Template for creating a Single-Page Application (SPA) with ASP.NET Core.
     </summary>
     <releaseNotes>
-      Recreated the Todo page demo that was broken in the Angular 13 upgrade.
+      Switch to ASP.NET Core Minimal API
     </releaseNotes>
 
     <projectUrl>https://github.com/JasonTaylorDev/CleanArchitecture</projectUrl>
@@ -19,7 +19,7 @@
 
     <license type="expression">MIT</license>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <tags>clean-architecture project template csharp dotnet angular</tags>
+    <tags>clean-architecture project template csharp dotnet angular react</tags>
     <icon>icon.png</icon>
     <readme>README.md</readme>
 

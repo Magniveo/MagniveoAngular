@@ -12,7 +12,6 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
     app.UseMigrationsEndPoint();
 
     // Initialise and seed database
@@ -39,21 +38,14 @@ app.UseSwaggerUi3(settings =>
     settings.DocumentPath = "/api/specification.json";
 });
 
-app.UseRouting();
-
-app.UseAuthentication();
-app.UseIdentityServer();
-app.UseAuthorization();
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller}/{action=Index}/{id?}");
 
 app.MapRazorPages();
 
-app.MapFallbackToFile("index.html"); ;
+app.MapFallbackToFile("index.html");
+
+app.MapEndpoints();
 
 app.Run();
-
-// Make the implicit Program class public so test projects can access it
-public partial class Program { }

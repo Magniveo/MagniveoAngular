@@ -17,8 +17,8 @@ public partial class Testing
     private static WebApplicationFactory<Program> _factory = null!;
     private static IConfiguration _configuration = null!;
     private static IServiceScopeFactory _scopeFactory = null!;
-    private static Checkpoint _checkpoint = null!;
-    private static string? _currentUserId;
+    private static Respawner _checkpoint = null!;
+    private static string? _userId;
 
     [OneTimeSetUp]
     public void RunBeforeAnyTests()
@@ -27,10 +27,16 @@ public partial class Testing
         _scopeFactory = _factory.Services.GetRequiredService<IServiceScopeFactory>();
         _configuration = _factory.Services.GetRequiredService<IConfiguration>();
 
-        _checkpoint = new Checkpoint
+        using var scope = _scopeFactory.CreateScope();
+
+        var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+        context.Database.Migrate();
+
+        _checkpoint = Respawner.CreateAsync(_configuration.GetConnectionString("DefaultConnection")!, new RespawnerOptions
         {
-            TablesToIgnore = new[] { "__EFMigrationsHistory" }
-        };
+            TablesToIgnore = new Respawn.Graph.Table[] { "__EFMigrationsHistory" }
+        }).GetAwaiter().GetResult();
     }
 
     public static async Task<TResponse> SendAsync<TResponse>(IRequest<TResponse> request)
@@ -42,9 +48,18 @@ public partial class Testing
         return await mediator.Send(request);
     }
 
-    public static string? GetCurrentUserId()
+    public static async Task SendAsync(IBaseRequest request)
     {
-        return _currentUserId;
+        using var scope = _scopeFactory.CreateScope();
+
+        var mediator = scope.ServiceProvider.GetRequiredService<ISender>();
+
+        await mediator.Send(request);
+    }
+
+    public static string? GetUserId()
+    {
+        return _userId;
     }
 
     public static async Task<string> RunAsDefaultUserAsync()
@@ -81,9 +96,9 @@ public partial class Testing
 
         if (result.Succeeded)
         {
-            _currentUserId = user.Id;
+            _userId = user.Id;
 
-            return _currentUserId;
+            return _userId;
         }
 
         var errors = string.Join(Environment.NewLine, result.ToApplicationResult().Errors);
@@ -93,9 +108,15 @@ public partial class Testing
 
     public static async Task ResetState()
     {
-        await _checkpoint.Reset(_configuration.GetConnectionString("DefaultConnection"));
+        try
+        {
+            await _checkpoint.ResetAsync(_configuration.GetConnectionString("DefaultConnection")!);
+        }
+        catch (Exception) 
+        {
+        }
 
-        _currentUserId = null;
+        _userId = null;
     }
 
     public static async Task<TEntity?> FindAsync<TEntity>(params object[] keyValues)
