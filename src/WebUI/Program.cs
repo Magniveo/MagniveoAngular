@@ -48,4 +48,5 @@ app.MapFallbackToFile("index.html");
 
 app.MapEndpoints();
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 app.Run();
