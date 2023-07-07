@@ -1,43 +1,46 @@
 <header>
-  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-    <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">WebUI</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target=".navbar-collapse"
-        aria-label="Toggle navigation"
-        [attr.aria-expanded]="isExpanded"
-        (click)="toggle()"
-      >
-        <span class="navbar-toggler-icon"></span>
+    <tui-tabs>
+      <button tuiTab [routerLink]="['/']" [routerLinkActive]="['link-active']">
+        <tui-svg
+                src="tuiIconCreditCard"
+                class="tui-space_right-2"
+        ></tui-svg>
+        WebUI
       </button>
-      <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end"
-           [ngClass]="{ show: isExpanded }">
-        <ul class="navbar-nav flex-grow">
-          <li class="nav-item"
-              [routerLinkActive]="['link-active']"
-              [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/counter']">Counter</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch data</a>
-          </li>
-          <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/todo']">Todo</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="/api" target="_blank">API</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-dark" href="/Identity/Account/Manage">Account</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+      <button tuiTab [routerLink]="['/counter']" [routerLinkActive]="['link-active']">
+        <tui-svg
+                src="tuiIconPhone"
+                class="tui-space_right-2"
+        ></tui-svg>
+        Counter
+      </button>
+      <button tuiTab [routerLink]="['/fetch-data']" [routerLinkActive]="['link-active']">
+        <tui-svg
+                src="tuiIconSettings"
+                class="tui-space_right-2">
+        </tui-svg>
+        Fetch data
+      </button>
+      <button tuiTab [routerLink]="['/todo']" [routerLinkActive]="['link-active']">
+        <tui-svg
+                src="tuiIconSettings"
+                class="tui-space_right-2">
+        </tui-svg>
+        Todo
+      </button>
+      <button tuiTab [routerLink]="['/api']" target="_blank">
+        <tui-svg
+                src="tuiIconSettings"
+                class="tui-space_right-2">
+        </tui-svg>
+        API
+      </button>
+      <button tuiTab [routerLink]="['/Identity/Account/Manage']" [routerLinkActive]="['link-active']">
+        <tui-svg
+                src="tuiIconSettings"
+                class="tui-space_right-2">
+        </tui-svg>
+        Account
+      </button>
+    </tui-tabs>
 </header>

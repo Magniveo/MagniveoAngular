@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class NavMenuComponent {
   isExpanded = false;
-
+  activeItemIndex = 0;
   collapse() {
     this.isExpanded = false;
   }

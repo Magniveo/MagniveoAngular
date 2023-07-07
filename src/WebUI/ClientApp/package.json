@@ -23,13 +23,16 @@
     "@angular/platform-browser-dynamic": "^15.2.9",
     "@angular/platform-server": "^15.2.9",
     "@angular/router": "^15.2.9",
-    "bootstrap": "^5.3.0",
-    "bootstrap-icons": "^1.10.5",
-    "ngx-bootstrap": "10.2.0",
-    "jquery": "^3.6.4",
     "@popperjs/core": "^2.11.8",
+    "@taiga-ui/addon-charts": "^3.35.0",
+    "@taiga-ui/addon-table": "^3.35.0",
+    "@taiga-ui/addon-tablebars": "^3.35.0",
+    "@taiga-ui/icons": "^3.35.0",
+    "@taiga-ui/layout": "^3.35.0",
+    "ngx-bootstrap": "10.2.0",
     "run-script-os": "^1.1.6",
     "rxjs": "~7.8.1",
+    "taiga-ui": "^3.35.0",
     "tslib": "^2.5.0",
     "zone.js": "~0.13.0"
   },
@@ -51,6 +54,5 @@
   "overrides": {
     "autoprefixer": "10.4.5",
     "webpack": "5.81.0"
-  },
-  "optionalDependencies": {}
+  }
 }
