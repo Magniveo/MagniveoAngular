@@ -82,10 +82,11 @@ dotnet new ca-usecase --help
 
 The template is configured to use an in-memory database by default. This ensures that all users will be able to run the solution without needing to set up additional infrastructure (e.g. SQL Server).
 
-If you would like to use SQL Server, you will need to update **WebUI/appsettings.json** as follows:
+For user PostgreSql, you will need to update **WebUI/appsettings.json** as follows:
 
 ```json
   "UseInMemoryDatabase": false,
+  "DefaultConnection": "Server=127.0.0.1;Port=5432;Database=yourDB;User Id=postgres;Password=password;"
 ```
 
 Verify that the **DefaultConnection** connection string within **appsettings.json** points to a valid SQL Server instance. 
