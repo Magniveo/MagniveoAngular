@@ -1,4 +1,4 @@
-<h1>Todo</h1>
+<h1>ToDo</h1>
 
 <p>This is a complex todo list component.</p>
 
@@ -10,7 +10,8 @@
     <div class="col-sm-4">
       <div class="clearfix">
         <h2 class="float-start">Lists</h2>
-        <button class="btn btn-default float-end" title="New List..."
+        <button tuiButton class="tui-space_right-3 tui-space_bottom-3" title="New List..."
+                size="s"
           (click)="showNewListModal(newListModalTemplate)">
           <i class="bi bi-journal-plus"></i>
         </button>
@@ -32,7 +33,8 @@
     <div class="col-sm-8" *ngIf="selectedList">
       <div class="clearfix">
         <h2 class="float-start">{{ selectedList.title }}</h2>
-        <button id="listOptions" class="btn btn-default float-end" title="List Options..."
+        <button tuiButton id="listOptions" class="tui-space_right-3 tui-space_bottom-3" title="List Options..."
+                size="s"
           (click)="showListOptionsModal(listOptionsModalTemplate)">
           <i class="bi bi-three-dots-vertical"></i>
         </button>
@@ -53,15 +55,21 @@
               </div>
             </div>
             <div class="todo-item-commands">
-              <button *ngIf="item.id != 0" (click)="showItemDetailsModal(itemDetailsModalTemplate, item)"
-                class="btn btn-default btn-xs" role="button">
+              <button tuiButton *ngIf="item.id != 0" (click)="showItemDetailsModal(itemDetailsModalTemplate, item)"
+                class="tui-space_right-3 tui-space_bottom-3" role="button" size="s">
                 <i class="bi bi-three-dots-vertical"></i>
               </button>
             </div>
           </div>
         </li>
         <li class="list-group-item" (click)="addItem()">
-          <button class="btn btn-default">Add Item...</button>
+          <button
+                  tuiButton
+                  size="s"
+                  type="button"
+                  class="tui-space_right-3 tui-space_bottom-3">
+            Add Item...
+          </button>
         </li>
       </ul>
     </div>
@@ -75,7 +83,7 @@
 <ng-template #listOptionsModalTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">List Options</h4>
-    <button type="button" class="close btn-close pull-right" aria-label="Close" (click)="listOptionsModalRef.hide()">
+    <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3" aria-label="Close" size="s" (click)="listOptionsModalRef.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
@@ -92,11 +100,11 @@
   <div class="modal-footer">
     <div class="clearfix">
       <div class="float-start">
-        <button class="btn btn-default text-danger" (click)="confirmDeleteList(deleteListModalTemplate)">Delete</button>
+        <button tuiButton class="tui-space_right-3 tui-space_bottom-3 text-danger" size="s" (click)="confirmDeleteList(deleteListModalTemplate)">Delete</button>
       </div>
       <div class="float-end">
-        <button class="btn btn-default" (click)="listOptionsModalRef.hide()">Cancel</button>
-        <button class="btn btn-primary" (click)="updateListOptions()">Update</button>
+        <button tuiButton class="tui-space_right-3 tui-space_bottom-3" size="s" (click)="listOptionsModalRef.hide()">Cancel</button>
+        <button tuiButton class="tui-space_right-3 tui-space_bottom-3" size="s" (click)="updateListOptions()">Update</button>
       </div>
     </div>
   </div>
@@ -105,7 +113,7 @@
 <ng-template #itemDetailsModalTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Item Details</h4>
-    <button type="button" class="close btn-close pull-right" aria-label="Close" (click)="itemDetailsModalRef.hide()">
+    <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3" aria-label="Close" size="s" (click)="itemDetailsModalRef.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
@@ -135,11 +143,11 @@
   <div class="modal-footer">
     <div class="clearfix">
       <div class="float-start">
-        <button class="btn btn-default text-danger" (click)="deleteItem(selectedItem)">Delete</button>
+        <button tuiButton class="tui-space_right-3 tui-space_bottom-3 text-danger" size="s" (click)="deleteItem(selectedItem)">Delete</button>
       </div>
       <div class="float-end">
-        <button class="btn btn-default" (click)="itemDetailsModalRef.hide()">Cancel</button>
-        <button class="btn btn-primary" (click)="updateItemDetails()">Update</button>
+        <button tuiButton class="tui-space_right-3 tui-space_bottom-3" size="s" (click)="itemDetailsModalRef.hide()">Cancel</button>
+        <button tuiButton class="tui-space_right-3 tui-space_bottom-3" size="s" (click)="updateItemDetails()">Update</button>
       </div>
     </div>
   </div>
@@ -148,7 +156,7 @@
 <ng-template #deleteListModalTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">Delete "{{ selectedList?.title }}"?</h4>
-    <button type="button" class="close btn-close pull-right" aria-label="Close" (click)="deleteListModalRef.hide()">
+    <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3" aria-label="Close" size="s" (click)="deleteListModalRef.hide()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
@@ -160,8 +168,8 @@
   </div>
   <div class="modal-footer clearfix">
     <div class="float-end">
-      <button type="button" class="btn btn-default" (click)="deleteListModalRef.hide()">Cancel</button>
-      <button type="button" class="btn btn-danger" (click)="deleteListConfirmed()">Delete</button>
+      <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3" size="s" (click)="deleteListModalRef.hide()">Cancel</button>
+      <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3" size="s" appearance="secondary-destructive" (click)="deleteListConfirmed()">Delete</button>
     </div>
   </div>
 </ng-template>
@@ -169,7 +177,7 @@
 <ng-template #newListModalTemplate>
   <div class="modal-header">
     <h4 class="modal-title pull-left">New List</h4>
-    <button type="button" class="close btn-close pull-right" aria-label="Close" (click)="newListCancelled()">
+    <button tuiButton type="button" class="tui-space_right-3 tui-space_bottom-3" aria-label="Close" size="s" (click)="newListCancelled()">
       <span aria-hidden="true" class="visually-hidden">&times;</span>
     </button>
   </div>
@@ -188,8 +196,8 @@
   </div>
   <div class="modal-footer clearfix">
     <div class="float-end">
-      <button class="btn btn-default" (click)="newListCancelled()">Cancel</button>
-      <button class="btn btn-primary" (click)="addList()">Create</button>
+      <button tuiButton class="tui-space_right-3 tui-space_bottom-3" size="s" (click)="newListCancelled()">Cancel</button>
+      <button tuiButton class="tui-space_right-3 tui-space_bottom-3" size="s" (click)="addList()">Create</button>
     </div>
   </div>
 </ng-template>

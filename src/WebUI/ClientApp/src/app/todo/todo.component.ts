@@ -1,10 +1,13 @@
-import { Component, TemplateRef, OnInit } from '@angular/core';
+import { Component, TemplateRef, OnInit, Inject, Injector } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { TodoListsClient, TodoItemsClient,
   TodoListDto, TodoItemDto, LookupDto,
   CreateTodoListCommand, UpdateTodoListCommand,
   CreateTodoItemCommand, UpdateTodoItemCommand, UpdateTodoItemDetailCommand
 } from '../web-api-client';
+import {TuiDialogService} from '@taiga-ui/core';
+import {PolymorpheusComponent} from '@tinkoff/ng-polymorpheus';
+import {ModuleDialogComponent} from "../components/module-dialog/module-dialog.component";
 
 @Component({
   selector: 'app-todo-component',
@@ -24,11 +27,20 @@ export class TodoComponent implements OnInit {
   listOptionsModalRef: BsModalRef;
   deleteListModalRef: BsModalRef;
   itemDetailsModalRef: BsModalRef;
-
+  private readonly dialog = this.dialogs.open<number>(
+      new PolymorpheusComponent(ModuleDialogComponent, this.injector),
+      {
+        data: 237,
+        dismissible: true,
+        label: 'Heading',
+      },
+  );/**/
   constructor(
     private listsClient: TodoListsClient,
     private itemsClient: TodoItemsClient,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    @Inject(TuiDialogService) private readonly dialogs: TuiDialogService,
+    @Inject(Injector) private readonly injector: Injector,
   ) {}
 
   ngOnInit(): void {
@@ -50,8 +62,16 @@ export class TodoComponent implements OnInit {
   }
 
   showNewListModal(template: TemplateRef<any>): void {
-    this.newListModalRef = this.modalService.show(template);
-    setTimeout(() => document.getElementById('title').focus(), 250);
+    //this.newListModalRef = this.modalService.show(template);
+    //setTimeout(() => document.getElementById('title').focus(), 250);
+    this.dialog.subscribe({
+      next: data => {
+        console.info(`Dialog emitted data = ${data}`);
+      },
+      complete: () => {
+        console.info('Dialog closed');
+      },
+    });/**/
   }
 
   newListCancelled(): void {
