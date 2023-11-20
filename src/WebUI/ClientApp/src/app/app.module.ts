@@ -18,7 +18,8 @@ import {ModuleDialog}from './components/module-dialog/module-dialog.module';
 
 import {TuiButtonModule, TuiRootModule, TuiSvgModule, TuiTextfieldControllerModule} from '@taiga-ui/core';
 import {TuiDataListWrapperModule, TuiInputModule, TuiTabsModule,TuiSelectModule} from "@taiga-ui/kit";
-import {TuiAutoFocusModule} from "@taiga-ui/cdk";
+import {TuiAutoFocusModule, TuiLetModule} from "@taiga-ui/cdk";
+import {TuiTableModule} from "@taiga-ui/addon-table";
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,32 +28,34 @@ import {TuiAutoFocusModule} from "@taiga-ui/cdk";
     CounterComponent,
     FetchDataComponent,
     TodoComponent,
-        
+
   ],
-    imports: [
-        BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
-        HttpClientModule,
-        FormsModule,
-        BrowserAnimationsModule, // Required by Taiga UI
-        TuiRootModule, // Has to go after BrowserAnimationsModule
-        RouterModule.forRoot([
-            {path: '', component: HomeComponent, pathMatch: 'full'},
-            {path: 'counter', component: CounterComponent},
-            {path: 'fetch-data', component: FetchDataComponent},
-            {path: 'todo', component: TodoComponent}
-        ]),
-        BrowserAnimationsModule,
-        ModalModule.forRoot(),
-        ModuleDialog,
-        TuiSvgModule,
-        TuiTabsModule,
-        TuiButtonModule,
-        TuiAutoFocusModule,
-        TuiInputModule,
-        TuiDataListWrapperModule,
-        TuiTextfieldControllerModule,
-        TuiSelectModule
-    ],
+  imports: [
+    BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule, // Required by Taiga UI
+    TuiRootModule, // Has to go after BrowserAnimationsModule
+    RouterModule.forRoot([
+      {path: '', component: HomeComponent, pathMatch: 'full'},
+      {path: 'counter', component: CounterComponent},
+      {path: 'fetch-data', component: FetchDataComponent},
+      {path: 'todo', component: TodoComponent}
+    ]),
+    BrowserAnimationsModule,
+    ModalModule.forRoot(),
+    ModuleDialog,
+    TuiSvgModule,
+    TuiTabsModule,
+    TuiButtonModule,
+    TuiAutoFocusModule,
+    TuiInputModule,
+    TuiDataListWrapperModule,
+    TuiTextfieldControllerModule,
+    TuiSelectModule,
+    TuiTableModule,
+    TuiLetModule
+  ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
   ],

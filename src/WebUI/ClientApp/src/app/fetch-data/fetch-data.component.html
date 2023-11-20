@@ -4,21 +4,25 @@
 
 <p *ngIf="!forecasts?.length"><em>Loading...</em></p>
 
-<table class='table table-striped' aria-labelledby="tableLabel" *ngIf="forecasts.length">
+<table tuiTable [columns]="columns" aria-labelledby="tableLabel" class="table"  *ngIf="forecasts.length">
   <thead>
-    <tr>
-      <th>Date</th>
-      <th>Temp. (C)</th>
-      <th>Temp. (F)</th>
-      <th>Summary</th>
+    <tr tuiThGroup>
+      <th *tuiHead="'date'" tuiTh>Date</th>
+      <th *tuiHead="'temperatureC'" tuiTh>Temp. (C)</th>
+      <th *tuiHead="'temperatureF'" tuiTh>Temp. (F)</th>
+      <th *tuiHead="'summary'" tuiTh>Summary</th>
     </tr>
   </thead>
-  <tbody>
-    <tr *ngFor="let forecast of forecasts">
-      <td>{{ forecast.date | date }}</td>
-      <td>{{ forecast.temperatureC }}</td>
-      <td>{{ forecast.temperatureF }}</td>
-      <td>{{ forecast.summary }}</td>
+  <tbody *tuiLet="forecasts | tuiTableSort as sortedForecasts" tuiTbody [data]="forecasts">
+    <tr tuiTr  *ngFor="let forecast of sortedForecasts;let index = index">
+      <td *tuiCell="'date'"
+          tuiTd>{{ forecast.date | date }}</td>
+      <td *tuiCell="'temperatureC'"
+          tuiTd>{{ forecast.temperatureC }}</td>
+      <td *tuiCell="'temperatureF'"
+          tuiTd>{{ forecast.temperatureF }}</td>
+      <td *tuiCell="'summary'"
+          tuiTd>{{ forecast.summary }}</td>
     </tr>
   </tbody>
 </table>
