@@ -18,7 +18,7 @@ The goal of this template is to provide a straightforward and efficient approach
 * [AutoMapper](https://automapper.org/)
 * [FluentValidation](https://fluentvalidation.net/)
 * [NUnit](https://nunit.org/), [FluentAssertions](https://fluentassertions.com/), [Moq](https://github.com/moq) & [Respawn](https://github.com/jbogard/Respawn)
-
+* [Taiga UI](https://github.com/Tinkoff/taiga-ui#-taiga-ui)
 ## Dependencies
 The template depends on the latest versions of:
 
@@ -82,10 +82,11 @@ dotnet new ca-usecase --help
 
 The template is configured to use an in-memory database by default. This ensures that all users will be able to run the solution without needing to set up additional infrastructure (e.g. SQL Server).
 
-If you would like to use SQL Server, you will need to update **WebUI/appsettings.json** as follows:
+For user PostgreSql, you will need to update **WebUI/appsettings.json** as follows:
 
 ```json
   "UseInMemoryDatabase": false,
+  "DefaultConnection": "Server=127.0.0.1;Port=5432;Database=yourDB;User Id=postgres;Password=password;"
 ```
 
 Verify that the **DefaultConnection** connection string within **appsettings.json** points to a valid SQL Server instance. 
