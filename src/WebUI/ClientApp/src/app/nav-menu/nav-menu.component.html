@@ -28,19 +28,19 @@
         </tui-svg>
         Todo
       </button>
-      <button tuiTab [routerLink]="['/api']" target="_blank">
+      <a tuiTab href="/api" target="_blank">
         <tui-svg
                 src="tuiIconSettings"
                 class="tui-space_right-2">
         </tui-svg>
         API
-      </button>
-      <button tuiTab [routerLink]="['/Identity/Account/Manage']" [routerLinkActive]="['link-active']">
+      </a>
+      <a tuiTab href="/Identity/Account/Manage">
         <tui-svg
                 src="tuiIconSettings"
                 class="tui-space_right-2">
         </tui-svg>
         Account
-      </button>
+      </a>
     </tui-tabs>
 </header>

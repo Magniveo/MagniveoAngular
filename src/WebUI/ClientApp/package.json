@@ -29,6 +29,8 @@
     "@taiga-ui/addon-tablebars": "^3.35.0",
     "@taiga-ui/icons": "^3.35.0",
     "@taiga-ui/layout": "^3.35.0",
+    "@taiga-ui/kit": "^3.35.0",
+    "@taiga-ui/cdk": "^3.35.0",
     "ngx-bootstrap": "10.2.0",
     "run-script-os": "^1.1.6",
     "rxjs": "~7.8.1",
@@ -37,8 +39,8 @@
     "zone.js": "~0.13.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^15.2.8",
-    "@angular/cli": "^15.2.8",
+    "@angular-devkit/build-angular": "^21.1.4",
+    "@angular/cli": "^21.1.4",
     "@angular/compiler-cli": "^15.2.9",
     "@types/jasmine": "~4.3.1",
     "@types/jasminewd2": "~2.0.10",

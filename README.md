@@ -1,19 +1,12 @@
 # Clean Architecture Solution Template
 
-[![Build](https://github.com/jasontaylordev/CleanArchitecture/actions/workflows/dotnet-build.yml/badge.svg)](https://github.com/jasontaylordev/CleanArchitecture/actions/workflows/dotnet-build.yml)
-[![CodeQL](https://github.com/jasontaylordev/CleanArchitecture/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/jasontaylordev/CleanArchitecture/actions/workflows/codeql-analysis.yml)
-[![Nuget](https://img.shields.io/nuget/v/Clean.Architecture.Solution.Template?label=NuGet)](https://www.nuget.org/packages/Clean.Architecture.Solution.Template)
-[![Nuget](https://img.shields.io/nuget/dt/Clean.Architecture.Solution.Template?label=Downloads)](https://www.nuget.org/packages/Clean.Architecture.Solution.Template)
-[![Discord](https://img.shields.io/discord/893301913662148658?label=Discord)](https://discord.gg/p9YtBjfgGe)
-![Twitter Follow](https://img.shields.io/twitter/follow/jasontaylordev?label=Follow&style=social)
-
 The goal of this template is to provide a straightforward and efficient approach to enterprise application development, leveraging the power of Clean Architecture and ASP.NET Core. Using this template, you can effortlessly create a Single Page App (SPA) with ASP.NET Core and Angular or React, while adhering to the principles of Clean Architecture. Getting started is easy - simply install the **.NET template** (see below for full details).
 
 ## Technologies
 
 * [ASP.NET Core 8](https://docs.microsoft.com/en-us/aspnet/core/introduction-to-aspnet-core)
 * [Entity Framework Core 8](https://docs.microsoft.com/en-us/ef/core/)
-* [Angular 15](https://angular.io/) or [React 18](https://react.dev/)
+* [Angular 15](https://angular.io/) 
 * [MediatR](https://github.com/jbogard/MediatR)
 * [AutoMapper](https://automapper.org/)
 * [FluentValidation](https://fluentvalidation.net/)
@@ -37,11 +30,6 @@ Once installed, create a new solution using the template. You can choose to use 
 To create a SPA with Angular:
 ```
 dotnet new ca-sln --client-framework Angular --output YourProjectName
-```
-
-To create a SPA with React:
-```
-dotnet new ca-sln -cf React -o YourProjectName
 ```
 
 To create a Web API-only solution:
@@ -107,12 +95,7 @@ For example, to add a new migration from the root folder:
  `dotnet ef migrations add "SampleMigration" --project src\Infrastructure --startup-project src\WebUI --output-dir Persistence\Migrations`
 
 ## Versions
-The main branch is now on .NET 8.0. The following previous versions are available:
-
-* [7.0](https://github.com/jasontaylordev/CleanArchitecture/tree/net7.0)
-* [6.0](https://github.com/jasontaylordev/CleanArchitecture/tree/net6.0)
-* [5.0](https://github.com/jasontaylordev/CleanArchitecture/tree/net5.0)
-* [3.1](https://github.com/jasontaylordev/CleanArchitecture/tree/netcore3.1)
+The main branch is now on .NET 8.0.
 
 ## Learn More
 

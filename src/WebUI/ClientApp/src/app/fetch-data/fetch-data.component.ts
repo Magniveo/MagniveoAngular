@@ -6,6 +6,7 @@ import { WeatherForecastsClient, WeatherForecast } from '../web-api-client';
   templateUrl: './fetch-data.component.html'
 })
 export class FetchDataComponent {
+  readonly columns = ['date', 'temperatureC', 'temperatureF', 'summary'];
   public forecasts: WeatherForecast[] = [];
 
   constructor(private client: WeatherForecastsClient) {

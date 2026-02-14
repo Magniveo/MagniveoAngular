@@ -14,9 +14,12 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { TodoComponent } from './todo/todo.component';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {ModuleDialog}from './components/module-dialog/module-dialog.module';
 
-import {TuiRootModule, TuiSvgModule} from '@taiga-ui/core';
-import {TuiTabsModule} from "@taiga-ui/kit";
+import {TuiButtonModule, TuiRootModule, TuiSvgModule, TuiTextfieldControllerModule} from '@taiga-ui/core';
+import {TuiDataListWrapperModule, TuiInputModule, TuiTabsModule,TuiSelectModule} from "@taiga-ui/kit";
+import {TuiAutoFocusModule, TuiLetModule} from "@taiga-ui/cdk";
+import {TuiTableModule} from "@taiga-ui/addon-table";
 @NgModule({
   declarations: [
     AppComponent,
@@ -24,7 +27,8 @@ import {TuiTabsModule} from "@taiga-ui/kit";
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    TodoComponent
+    TodoComponent,
+
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -40,8 +44,17 @@ import {TuiTabsModule} from "@taiga-ui/kit";
     ]),
     BrowserAnimationsModule,
     ModalModule.forRoot(),
+    ModuleDialog,
     TuiSvgModule,
-    TuiTabsModule
+    TuiTabsModule,
+    TuiButtonModule,
+    TuiAutoFocusModule,
+    TuiInputModule,
+    TuiDataListWrapperModule,
+    TuiTextfieldControllerModule,
+    TuiSelectModule,
+    TuiTableModule,
+    TuiLetModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
